@@ -17,12 +17,11 @@ import com.manage.news.repostory.SubCategoryDao;
 class NewsApplicationTests {
 	
 	@Autowired
-	NewsDao newsDao;
+	private NewsDao newsDao;
 	@Autowired
-	CategoryDao categoryDao;
+	private CategoryDao categoryDao;
 	@Autowired
-	SubCategoryDao subCategoryDao;
-	
+	private SubCategoryDao subCategoryDao;
 	
 	
 	@Test
