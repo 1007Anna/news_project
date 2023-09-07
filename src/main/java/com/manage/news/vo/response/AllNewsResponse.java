@@ -2,15 +2,18 @@ package com.manage.news.vo.response;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AllNewsResponse {
 
-	private Integer categoryID;
+	private Integer category_id;
 
-	private String categoryName;
+	private String category_name;
 
 	private Integer subCategoryID;
 
-	private String subCategoryName;
+	private String sub_category_name;
 
 	private Integer newsID;
 
@@ -20,7 +23,7 @@ public class AllNewsResponse {
 
 	private Integer state;
 
-	private LocalDate updateTime;
+	private LocalDate update_time;
 
 	private String name;
 
@@ -28,35 +31,19 @@ public class AllNewsResponse {
 		super();
 	}
 
-	public AllNewsResponse(Integer categoryID, String categoryName, Integer subCategoryID, String subCategoryName,
-			Integer newsID, String title, String content, Integer state, LocalDate updateTime, String name) {
+	public AllNewsResponse(Integer category_id, String category_name, Integer subCategoryID, String sub_category_name,
+			Integer newsID, String title, String content, Integer state, LocalDate update_time, String name) {
 		super();
-		this.categoryID = categoryID;
-		this.categoryName = categoryName;
+		this.category_id = category_id;
+		this.category_name = category_name;
 		this.subCategoryID = subCategoryID;
-		this.subCategoryName = subCategoryName;
+		this.sub_category_name = sub_category_name;
 		this.newsID = newsID;
 		this.title = title;
 		this.content = content;
 		this.state = state;
-		this.updateTime = updateTime;
+		this.update_time = update_time;
 		this.name = name;
-	}
-
-	public Integer getCategoryID() {
-		return categoryID;
-	}
-
-	public void setCategoryID(Integer categoryID) {
-		this.categoryID = categoryID;
-	}
-
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
 	}
 
 	public Integer getSubCategoryID() {
@@ -65,14 +52,6 @@ public class AllNewsResponse {
 
 	public void setSubCategoryID(Integer subCategoryID) {
 		this.subCategoryID = subCategoryID;
-	}
-
-	public String getSubCategoryName() {
-		return subCategoryName;
-	}
-
-	public void setSubCategoryName(String subCategoryName) {
-		this.subCategoryName = subCategoryName;
 	}
 
 	public Integer getNewsID() {
@@ -107,20 +86,44 @@ public class AllNewsResponse {
 		this.state = state;
 	}
 
-	public LocalDate getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(LocalDate updateTime) {
-		this.updateTime = updateTime;
-	}
-
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Integer getCategory_id() {
+		return category_id;
+	}
+
+	public void setCategory_id(Integer category_id) {
+		this.category_id = category_id;
+	}
+
+	public String getCategory_name() {
+		return category_name;
+	}
+
+	public void setCategory_name(String category_name) {
+		this.category_name = category_name;
+	}
+
+	public String getSub_category_name() {
+		return sub_category_name;
+	}
+
+	public void setSub_category_name(String sub_category_name) {
+		this.sub_category_name = sub_category_name;
+	}
+
+	public LocalDate getUpdate_time() {
+		return update_time;
+	}
+
+	public void setUpdate_time(LocalDate update_time) {
+		this.update_time = update_time;
 	}
 
 }

@@ -25,19 +25,19 @@ public interface NewsService {
 	// 搜索最新消息
 	public GetNewsResponse searchHotNews();
 
-	// 搜尋所有新聞
-	public GetNewsResponse searchAllNews();
-
 	// 搜全部新聞
 	public List<AllNewsResponse> getNewsAll();
-
+	
 	// 搜索新聞(利用關鍵字、更新時間搜尋)
-	public GetNewsResponse searchNews(GetNewsRequest getNewsRequest);
+	public GetNewsResponse searchBar(GetNewsRequest getNewsRequest);
 
 	// 根據帳號搜新聞
 	public NewsResponse searchAllNewsByAccount(HttpSession session);
-	
+
 	// 根據subCategoryId搜尋新聞
-	public NewsResponse getAllNewsBySubCategoryID(SubCategoryRequest subCategoryRequest);
+//	public NewsResponse getAllNewsBySubCategoryName(SubCategoryRequest subCategoryRequest);
+
+	// 根據subCategoryId搜尋新聞
+	public NewsResponse getAllNewsBySubCategoryName(SubCategoryRequest subCategoryRequest);
 
 }

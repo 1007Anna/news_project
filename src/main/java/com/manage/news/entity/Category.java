@@ -1,5 +1,7 @@
 package com.manage.news.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -28,12 +30,12 @@ public class Category {
 		this.categoryID = categoryID;
 	}
 
-	public String getCategory() {
+	public String getCategoryName() {
 		return categoryName;
 	}
 
-	public void setCategory(String category) {
-		this.categoryName = category;
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 }

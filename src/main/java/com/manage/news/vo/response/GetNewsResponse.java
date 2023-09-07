@@ -1,14 +1,14 @@
 package com.manage.news.vo.response;
 
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.manage.news.entity.News;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class GetNewsResponse {
 
-	private List<News> newsList;
+	private List<Map<String, Object>> newsList;
 
 	private String message;
 
@@ -16,7 +16,7 @@ public class GetNewsResponse {
 		super();
 	}
 
-	public GetNewsResponse(List<News> newsList) {
+	public GetNewsResponse(List<Map<String, Object>> newsList) {
 		super();
 		this.newsList = newsList;
 	}
@@ -26,20 +26,20 @@ public class GetNewsResponse {
 		this.message = message;
 	}
 
-	public List<News> getNewsList() {
-		return newsList;
-	}
-
-	public void setNewsList(List<News> newsList) {
-		this.newsList = newsList;
-	}
-
 	public String getMessage() {
 		return message;
 	}
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public List<Map<String, Object>> getNewsList() {
+		return newsList;
+	}
+
+	public void setNewsList(List<Map<String, Object>> newsList) {
+		this.newsList = newsList;
 	}
 
 }

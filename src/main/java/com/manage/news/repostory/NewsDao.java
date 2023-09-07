@@ -45,9 +45,15 @@ public interface NewsDao extends JpaRepository<News, Integer> {
 	public int updateNewsState(int newsID);
 	
 
-	// 搜尋當天新聞
-	@Query(value = "select * from news" + " where update_time = ?1", nativeQuery = true)
-	public List<News> getHotNews(LocalDate updateTime);
+	// 搜尋當天即時新聞
+	@Query(value = "select c.category_name,s.sub_category_id, s.sub_category_name,"
+			+ " n.news_id, n.title, n.content,"
+			+ " n.account, n.state, n.release_time, n.update_time" 
+			+ " from news n" 
+			+ " left join sub_category s on n.sub_category_id = s.sub_category_id" 
+			+ " left join category c on s.category_id = c.category_id" 
+			+ " where update_time = ?1", nativeQuery = true)
+	public List<Map<String, Object>> getHotNews(LocalDate updateTime);
 
 	
 	// 搜尋全部新聞
@@ -65,13 +71,22 @@ public interface NewsDao extends JpaRepository<News, Integer> {
 			+ " where n.state = 1"
 			+ " order by n.update_time DESC", nativeQuery = true)
 	List<Map<String, Object>> getNewsAll();
-
 	
-	// 搜尋新聞(用關鍵字、開始時間、結束時間搜尋)
-	@Query(value = "select * from news where case when ?1 is not null then title like %?1%" + " else true end"
-			+ " and case when ?2 is not null then update_time >= ?2" + " else true end"
-			+ " and case when ?3 is not null then update_time = ?3" + " else true end", nativeQuery = true)
-	public List<News> getNews(String title, LocalDate startDate, LocalDate endDate);
+	
+	@Query(value = "select c.category_name,s.sub_category_id, s.sub_category_name,"
+			+ " n.news_id, n.title, n.content,"
+			+ " n.account, n.state, n.release_time, n.update_time" 
+			+ " from news n" 
+			+ " left join sub_category s on n.sub_category_id = s.sub_category_id" 
+			+ " left join category c on s.category_id = c.category_id" 
+			+ " where case when ?1 is not null then n.title like %?1%" 
+			+ " else true end" 
+			+ " and case when ?2 is not null then n.update_time >= ?2" 
+			+ " else true end" 
+			+ " and case when ?3 is not null then n.update_time <= ?3" 
+			+ " else true end",
+		       nativeQuery = true)
+		public List<Map<String, Object>> searchBar(String title, LocalDate startDate, LocalDate endDate);
 
 	
 	// 根據帳號搜尋新聞
@@ -87,17 +102,29 @@ public interface NewsDao extends JpaRepository<News, Integer> {
 	public List<Map<String, Object>> getAllNewsByAccount(String account);
 	
 	
-	// 根據subCategoryId搜尋新聞
+	// 根據subCategoryName搜尋新聞  2023/9/1無法解決
+//	@Query("select new com.manage.news.vo.response.Test (s.subCategoryID, s.subCategoryName,"
+//            + " n.title, n.content, n.updateTime, c.categoryName, u.name) "
+//			+ " from SubCategory s"
+//            + "  join News n on s.subCategoryID = n.subCategoryID"
+//			+ "  join Category c on s.categoryID = c.categoryID"
+//            + "  join User u on n.account = u.account"
+//			+ " where s.subCategoryName = ?1 and n.state = 1"
+//			+ " order by n.updateTime DESC")
+//	public List<Map<String,Test>> getAllNewsBySubCategoryID(String subCategoryName);
+	
+	
 	@Query(value = "select s.sub_category_id, s.sub_category_name,"
             + " n.title, n.content, n.update_time, c.category_name, u.name "
 			+ " from sub_category s"
             + " left join news n on s.sub_category_id = n.sub_category_id"
 			+ " left join category c on s.category_id = c.category_id"
             + " left join user u on n.account = u.account"
-			+ " where s.sub_category_id = ?1 and n.state = 1"
+			+ " where s.sub_category_name = ?1 and n.state = 1"
 			+ " order by n.update_time DESC",
 			nativeQuery = true)
-	public List<Map<String, Object>> getAllNewsBySubCategoryID(int subCategoryID);
+	public List<Map<String, Object>> getAllNewsBySubCategoryID(String subCategoryName);
+	
 	
 	
 }

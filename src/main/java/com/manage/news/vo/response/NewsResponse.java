@@ -35,6 +35,8 @@ public class NewsResponse {
 		this.message = message;
 	}
 
+
+
 	public List<Map<String, Object>> getResList() {
 		return resList;
 	}

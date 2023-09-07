@@ -6,6 +6,8 @@ public class CategoryRequest {
 
 	private Integer categoryID;
 
+	private String subCategoryName;
+
 	public CategoryRequest() {
 		super();
 	}
@@ -24,6 +26,14 @@ public class CategoryRequest {
 
 	public void setCategoryID(Integer categoryID) {
 		this.categoryID = categoryID;
+	}
+
+	public String getSubCategoryName() {
+		return subCategoryName;
+	}
+
+	public void setSubCategoryName(String subCategoryName) {
+		this.subCategoryName = subCategoryName;
 	}
 
 }

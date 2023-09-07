@@ -87,5 +87,33 @@ class NewsApplicationTests {
 			}	
 		}
 	}
+	
+//	@Test
+//	public void getAllNewsBySubCategoryIDTest() {
+//		
+//		String subCategoryName = "中南美洲";
+//		
+//		List<Map<String, Object>> res = newsDao.getAllNewsBySubCategoryID(subCategoryName);
+//		for(Map<String, Object> list : res) {
+//			for(Entry<String, Object> map : list.entrySet()) {
+//				System.out.println(map.getKey());
+//				System.out.println(map.getValue());
+//			}	
+//		}
+//	}
+	
+	@Test
+	public void getAllNewsByAccountTest() {
+		
+		String account = "Anna";
+		
+		List<Map<String, Object>> res = newsDao.getAllNewsByAccount(account);
+		for(Map<String, Object> list : res) {
+			for(Entry<String, Object> map : list.entrySet()) {
+				System.out.println(map.getKey());
+				System.out.println(map.getValue());
+			}	
+		}
+	}
 
 }

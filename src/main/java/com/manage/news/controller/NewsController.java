@@ -37,29 +37,37 @@ public class NewsController {
 	@Autowired
 	NewsService newsService;
 
-	@PostMapping("addCategory")
-	public CategoryResponse addCategory(@RequestBody CategoryRequest categoryRequest) {
-		return categoryService.addCategory(categoryRequest);
+	@PostMapping("addCategoryAndSubCategory")
+	public CategoryResponse addCategoryAndSubCategory
+	(@RequestBody CategoryRequest categoryRequest, HttpSession session) {
+		return categoryService.addCategoryAndSubCategory(categoryRequest, session);
 	}
 
 	@PostMapping("editCategory")
-	public CategoryResponse editCategory(@RequestBody CategoryRequest categoryRequest) {
-		return categoryService.editCategory(categoryRequest);
+	public CategoryResponse editCategory(@RequestBody CategoryRequest categoryRequest, HttpSession session) {
+		return categoryService.editCategory(categoryRequest, session);
 	}
 
 	@PostMapping("addSubCategory")
-	public SubCategoryResponse addSubCategory(@RequestBody SubCategoryRequest subCategoryRequest) {
-		return categoryService.addSubCategory(subCategoryRequest);
+	public SubCategoryResponse addSubCategory
+	(@RequestBody SubCategoryRequest subCategoryRequest, HttpSession session) {
+		return categoryService.addSubCategory(subCategoryRequest, session);
 	}
 	
 	@PostMapping("editSubCategory")
-	public SubCategoryResponse editSubCategory(@RequestBody SubCategoryRequest subCategoryRequest) {
-		return categoryService.editSubCategory(subCategoryRequest);
+	public SubCategoryResponse editSubCategory
+	(@RequestBody SubCategoryRequest subCategoryRequest, HttpSession session) {
+		return categoryService.editSubCategory(subCategoryRequest, session);
 	}
 	
 	@GetMapping("getAllSubCategory")
 	public List<SubCategoryResponse> getAllSubCategory() {
 		return categoryService.getAllSubCategory();
+	}
+	
+	@GetMapping("getAllSubCategoryId")
+	public List<SubCategoryResponse> getAllSubCategoryId() {
+		return categoryService.getAllSubCategoryId();
 	}
 	
 	@PostMapping("log_in")
@@ -96,11 +104,6 @@ public class NewsController {
 		return newsService.searchHotNews();
 	}
 	
-	@GetMapping("searchAllNews")
-	public GetNewsResponse searchAllNews() {
-		return newsService.searchAllNews();
-	}
-	
 	@GetMapping("getNewsAll")
 	public List<AllNewsResponse> getNewsAll() {
 		return newsService.getNewsAll();
@@ -108,7 +111,7 @@ public class NewsController {
 	
 	@PostMapping("searchNews")
 	public GetNewsResponse searchNews(@RequestBody GetNewsRequest getNewsRequest) {
-		return newsService.searchNews(getNewsRequest);
+		return newsService.searchBar(getNewsRequest);
 	}
 	
 	@GetMapping("searchAllNewsByAccount")
@@ -116,9 +119,14 @@ public class NewsController {
 		return newsService.searchAllNewsByAccount(session);
 	}
 	
-	@PostMapping("getAllNewsBySubCategoryID")
-	public NewsResponse getAllNewsBySubCategoryID(@RequestBody SubCategoryRequest subCategoryRequest) {
-		return newsService.getAllNewsBySubCategoryID(subCategoryRequest);
+	@PostMapping("getAllNewsBySubCategoryName")
+	public NewsResponse getAllNewsBySubCategoryName(@RequestBody SubCategoryRequest subCategoryRequest) {
+		return newsService.getAllNewsBySubCategoryName(subCategoryRequest);
 	}
 
+	@GetMapping("getAllCategory")
+	public CategoryResponse getAllCategory() {
+		return categoryService.getAllCategory();
+	}
+	
 }

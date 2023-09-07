@@ -37,7 +37,7 @@ public class NewsServiceImpl implements NewsService {
 		// 判斷是否登入
 		String loginAccount = (String) session.getAttribute("account");
 		String loginPassword = (String) session.getAttribute("password");
-	
+
 		if (!StringUtils.hasText(loginAccount) || !StringUtils.hasText(loginPassword)) {
 			return new NewsResponse("請登入");
 		}
@@ -162,31 +162,26 @@ public class NewsServiceImpl implements NewsService {
 		LocalDate updateTime = LocalDate.now();
 
 		// 搜尋最新新聞
-		List<News> getResult = newsDao.getHotNews(updateTime);
+		List<Map<String, Object>> getResult = newsDao.getHotNews(updateTime);
+
+		if (getResult.isEmpty()) {
+			return new GetNewsResponse("當日無即時新聞");
+		}
 
 		return new GetNewsResponse(getResult);
 	}
 
-	@Override
-	public GetNewsResponse searchAllNews() {
-
-		// 搜尋所有新聞
-		List<News> getResult = newsDao.getAllNews();
-
-		return new GetNewsResponse(getResult);
-	}
 
 	@Override
-	public GetNewsResponse searchNews(GetNewsRequest getNewsRequest) {
+	public GetNewsResponse searchBar(GetNewsRequest getNewsRequest) {
 
 		// 畫面需填寫的項目
 		String keyword = getNewsRequest.getKeyword();
 		LocalDate startDay = getNewsRequest.getStartDay();
 		LocalDate endDay = getNewsRequest.getEndDay();
-
-		// 搜尋新聞(用關鍵字、開始時間、結束時間搜尋)
-		List<News> resList = newsDao.getNews(keyword, startDay, endDay);
-
+		
+		List<Map<String, Object>> resList = newsDao.searchBar(keyword, startDay, endDay);
+		
 		if (resList.isEmpty()) {
 			return new GetNewsResponse("此分類無新聞");
 		}
@@ -196,38 +191,37 @@ public class NewsServiceImpl implements NewsService {
 
 	@Override
 	public List<AllNewsResponse> getNewsAll() {
-		
+
 		List<AllNewsResponse> resList = new ArrayList<>();
 		// 需要的新聞資訊
-		Integer categoryID = null;
-		String categoryName = null;
+		Integer category_id = null;
+		String category_name = null;
 		Integer subCategoryID = null;
-		String subCategoryName = null;
+		String sub_category_name = null;
 		Integer newsID = null;
 		String title = null;
 		String content = null;
 		Integer state = null;
-		LocalDate updateTime = null;
+		LocalDate update_time = null;
 		String name = null;
 
 		// 搜尋所有新聞
 		List<Map<String, Object>> getResult = newsDao.getNewsAll();
-		for(Map<String, Object> map : getResult) {
+		for (Map<String, Object> map : getResult) {
 			// 將資料傳到上面的參數
-			categoryID = (Integer) map.get("category_id");
-			categoryName = (String) map.get("category_name");
+			category_id = (Integer) map.get("category_id");
+			category_name = (String) map.get("category_name");
 			subCategoryID = (Integer) map.get("sub_category_id");
-			subCategoryName = (String) map.get("sub_category_name");
+			sub_category_name = (String) map.get("sub_category_name");
 			newsID = (Integer) map.get("news_id");
 			title = (String) map.get("title");
 			content = (String) map.get("content");
 			state = (Integer) map.get("state");
-			updateTime = LocalDate.parse(map.get("update_time").toString()) ;
+			update_time = LocalDate.parse(map.get("update_time").toString());
 			name = (String) map.get("name");
 			// 轉換型別
-			AllNewsResponse allNewsResponse = new AllNewsResponse(categoryID, categoryName,
-					subCategoryID, subCategoryName, newsID, title,
-					content, state, updateTime, name);
+			AllNewsResponse allNewsResponse = new AllNewsResponse(category_id, category_name, subCategoryID,
+					sub_category_name, newsID, title, content, state, update_time, name);
 			resList.add(allNewsResponse);
 		}
 
@@ -236,38 +230,38 @@ public class NewsServiceImpl implements NewsService {
 
 	@Override
 	public NewsResponse searchAllNewsByAccount(HttpSession session) {
-		
+
 		// 確認是否登入
 		String loginAccount = (String) session.getAttribute("account");
 		String loginPassword = (String) session.getAttribute("password");
-		
+
 		if (!StringUtils.hasText(loginAccount) || !StringUtils.hasText(loginPassword)) {
 			return new NewsResponse("請登入");
 		}
-		
+
 		// 依帳號搜尋新聞
 		List<Map<String, Object>> getResult = newsDao.getAllNewsByAccount(loginAccount);
-		
-		if(getResult.isEmpty()) {
+
+		if (getResult.isEmpty()) {
 			return new NewsResponse("此分類無新聞");
 		}
-		
+//		return null;
 		return new NewsResponse(getResult);
 	}
 
 	@Override
-	public NewsResponse getAllNewsBySubCategoryID(SubCategoryRequest subCategoryRequest) {
-		
+	public NewsResponse getAllNewsBySubCategoryName(SubCategoryRequest subCategoryRequest) {
+
 		// 需要帶入的參數
-		Integer subCategoryID = subCategoryRequest.getSubCategoryID();
-		
+		String subCategoryName = subCategoryRequest.getSubCategoryName();
+
 		// 依次分類ID搜尋新聞
-		List<Map<String, Object>> getResult = newsDao.getAllNewsBySubCategoryID(subCategoryID);
-		
-		if(getResult.isEmpty()) {
+		List<Map<String, Object>> getResult = newsDao.getAllNewsBySubCategoryID(subCategoryName);
+
+		if (getResult.isEmpty()) {
 			return new NewsResponse("此分類無新聞");
 		}
-		
+
 		return new NewsResponse(getResult);
 	}
 

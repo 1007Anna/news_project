@@ -38,4 +38,6 @@ public class GetNewsRequest {
 		this.endDay = endDay;
 	}
 
+	
+
 }
